@@ -4,21 +4,37 @@ const gameController = require('../controllers/game.ctrl');
 
 router.get('/gameState', (req, res, next) => {
 
-    res.send(
-        gameController
-            .getGameState()
-    );
+    gameController
+        .getGameState()
+        .then(state => res.status(200).send(state))
+        .catch(err => res.sendStatus(500));
 });
 
 router.get('/startGame', (req, res, next) => {
 
-    let response = gameController.startGame();
-
-    if(response === true)
-        res.sendStatus(200);
-    else
-        res.sendStatus(428);
-
+    gameController
+        .startGame()
+        .then(() => res.sendStatus(200))
+        .catch(() => res.sendStatus(428));
 });
+
+router.post('/signup', (req, res, next) => {
+    if(req.body === undefined || req.body.username === undefined)
+        res.sendStatus(400);
+    else
+    gameController
+        .signUp(req.body.username)
+        .then(() => res.sendStatus(200))
+        .catch(err => res.status(428).send(err));
+});
+
+router.get('/listPlayers', (req, res, next) => {
+    gameController
+        .listPlayers()
+        .then((players) => res.status(200).send(players))
+        .catch(() => res.sendStatus(500));
+});
+
+
 
 module.exports = router;
