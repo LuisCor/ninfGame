@@ -19,6 +19,7 @@ router.get('/startGame', (req, res, next) => {
 });
 
 router.post('/signup', (req, res, next) => {
+    
     if(req.body === undefined || req.body.username === undefined)
         res.sendStatus(400);
     else
