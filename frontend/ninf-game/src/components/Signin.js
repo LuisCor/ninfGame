@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 function Signin(props) {
 
     const [value, setValue] = useState("Jogador");
+    const [nameValid, setValidity] = useState(true);
 
 
     const handleChange = (event) => {
@@ -24,13 +25,39 @@ function Signin(props) {
                 'Content-Type': 'application/json'
             }
         })
-        .then((resp) => {
-            if (resp.ok) {
-                props.controlState("lobby");
-            }
-        })
-        .catch(err => {/* catch the error here */ });
+            .then((resp) => {
+                if (resp.ok) {
+                    props.controlState("lobby");
+                }
+                if (!resp.ok) {
+                    setValidity(false);
+                }
+            })
+            .catch(err => { setValidity(false); console.log("triggered") });
     }
+
+    var textField;
+
+    if (nameValid)
+        textField = <TextField
+            id="username"
+            label="Nome"
+            value={value}
+            onChange={handleChange}
+            margin="normal"
+            variant="outlined"
+        />
+    else
+        textField = <TextField
+            error
+            id="username"
+            label="Nome"
+            value={value}
+            onChange={handleChange}
+            margin="normal"
+            variant="outlined"
+            helperText="Username já registado"
+        />
 
 
     return (
@@ -45,14 +72,7 @@ function Signin(props) {
             >
                 <form onSubmit={handleSubmit}>
                     <Grid>
-                        <TextField
-                            id="username"
-                            label="Nome"
-                            value={value}
-                            onChange={handleChange}
-                            margin="normal"
-                            variant="outlined"
-                        />
+                        {textField}
                     </Grid>
                     <Grid>
                         <Button
