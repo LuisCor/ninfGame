@@ -10,18 +10,12 @@ app.use(express.json());
 app.use(cors());
 
 const routes = require("./routes/game");
-app.use(routes);
+app.use(routes.router);
 
 
 app.get("/", function (req, res, next) {
     res.status(200).send("-> Game server is running");
 });
-
-/*
-app.get('/', function(req, res){
-   res.sendFile(__dirname + '/index.html');
-});
-*/
 
 io.on('connection', function (socket) {
     console.log('a user connected');

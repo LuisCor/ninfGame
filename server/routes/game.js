@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const gameController = require('../controllers/game.ctrl');
 
+
 router.get('/gameState', (req, res, next) => {
 
     gameController
@@ -14,19 +15,21 @@ router.get('/startGame', (req, res, next) => {
 
     gameController
         .startGame()
-        .then(() => res.sendStatus(200))
+        .then(() => {
+            res.sendStatus(200);
+        })
         .catch(() => res.sendStatus(428));
 });
 
 router.post('/signup', (req, res, next) => {
-    
-    if(req.body === undefined || req.body.username === undefined)
+
+    if (req.body === undefined || req.body.username === undefined)
         res.sendStatus(400);
     else
-    gameController
-        .signUp(req.body.username)
-        .then(() => res.sendStatus(200))
-        .catch(err => res.status(428).send(err));
+        gameController
+            .signUp(req.body.username)
+            .then(() => res.sendStatus(200))
+            .catch(err => res.status(428).send(err));
 });
 
 router.get('/listPlayers', (req, res, next) => {
@@ -37,5 +40,4 @@ router.get('/listPlayers', (req, res, next) => {
 });
 
 
-
-module.exports = router;
+module.exports = {router};

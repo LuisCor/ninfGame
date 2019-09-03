@@ -1,29 +1,25 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Header from './components/Header';
 import SignIn from './components/Signin';
 
-
-import {
-  getCurrentPot,
-  sendNameToServer,
-  sendPitchInToServer,
-  sendGetOneToServer
-} from './components/socket';
+const socket = io('http://localhost:5000');
 
 function App(props) {
 
   const [gameState, setGameState] = useState("waiting");
+  
+  
 
-  const getOne = () => {
-    const { dispatch, name } = "dude";
-    dispatch({ type: 'GET_ONE' });
-    sendGetOneToServer(name);
-  };
+  useEffect( () => {
+    socket.on('event', function(data){
+      console.log("Event was triggered");
+    });
+  });
 
-
+  
   if (gameState === "waiting")
     return (
       <div className={"app"}>
@@ -35,8 +31,6 @@ function App(props) {
             <SignIn controlState={setGameState} />
           </Grid>
         </Grid>
-        <Button onClick={getOne} variant="raised" color="secondary">Button</Button>
-
       </div>
     );
 
