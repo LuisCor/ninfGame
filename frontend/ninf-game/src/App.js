@@ -4,6 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Header from './components/Header';
 import SignIn from './components/Signin';
+import gameSocket from './components/GameSocket';
+import { triggeredEvent, sendTaunt } from './components/GameSocket';
+
 
 var socket = undefined;
 
@@ -12,20 +15,17 @@ function App(props) {
   const [gameState, setGameState] = useState("waiting");
 
   const initSocket = (username) => {
-    socket = io('http://localhost:5000', { query: "username=" + username });
+    socket = gameSocket(username);
   };
 
   useEffect(() => {
     if (socket)
-      socket.on('event', function (data) {
-        console.log("Event was triggered");
-      });
+      triggeredEvent();
   });
 
-  const sendTaunt = () => {
+  const clickTaunt = () => {
     if (socket) {
-      socket.emit('taunt', 'YA FUCKING WANKER');
-      console.log("Sent taunt");
+      sendTaunt();
     }
   }
 
@@ -36,12 +36,12 @@ function App(props) {
           <Header gameState={gameState} />
         </Grid>
         <Grid item xs={12}>
-          {gameState === "waiting" ? (
+          {gameState === "waiting" ? ([
             <SignIn controlState={setGameState} setInitSocket={initSocket} />
-          ) : gameState === "lobby" ? (
+          ]) : gameState === "lobby" ? (
             [
-            "Waiting for start",
-            < Button onClick={sendTaunt} > Send taunt </Button>
+              "Waiting for start",
+              < Button onClick={clickTaunt} > Send taunt </Button>
             ]
           ) : (
                 "render failed"

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const gameController = require('../controllers/game.ctrl');
-var sockets = [];
 
 router.get('/gameState', (req, res, next) => {
 
@@ -18,7 +17,7 @@ router.get('/startGame', (req, res, next) => {
         .then(() => {
             res.sendStatus(200);
         })
-        .catch(() => res.sendStatus(428));
+        .catch((err) => {console.log(err), res.sendStatus(428)});
 });
 
 router.post('/signup', (req, res, next) => {
@@ -40,4 +39,5 @@ router.get('/listPlayers', (req, res, next) => {
 });
 
 
-module.exports = {router};
+module.exports.router = router;
+module.exports.gameController = gameController;

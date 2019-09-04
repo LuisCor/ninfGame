@@ -1,7 +1,4 @@
-// Game states
-// 0 - waiting
-// 1 - running
-// 2 - finished
+
 const gameStates = [
     "waiting",
     "running",
@@ -9,9 +6,14 @@ const gameStates = [
 ];
 var gameState = 0;
 var players = [];
-
+var thisgameSocket = undefined;
 
 module.exports = {
+
+    setGameSocket : (gameSocket) => {
+        thisgameSocket = gameSocket;
+    },
+
     getGameState: () => {
         return new Promise((resolve, reject) => {
             resolve(gameStates[gameState]);
@@ -22,6 +24,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             if(gameState === 0){
                 gameState = 1;
+                thisgameSocket.broadcastEvent();
                 console.log("-> GAME STARTED");
                 resolve();
             } else {
