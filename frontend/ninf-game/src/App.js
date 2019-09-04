@@ -5,48 +5,54 @@ import Button from '@material-ui/core/Button';
 import Header from './components/Header';
 import SignIn from './components/Signin';
 
-const socket = io('http://localhost:5000');
+var socket = undefined;
 
 function App(props) {
 
   const [gameState, setGameState] = useState("waiting");
-  
-  
 
-  useEffect( () => {
-    socket.on('event', function(data){
-      console.log("Event was triggered");
-    });
+  const initSocket = (username) => {
+    socket = io('http://localhost:5000', { query: "username=" + username });
+  };
+
+  useEffect(() => {
+    if (socket)
+      socket.on('event', function (data) {
+        console.log("Event was triggered");
+      });
   });
 
-  
-  if (gameState === "waiting")
-    return (
-      <div className={"app"}>
-        <Grid container spacing={0}>
-          <Grid item xs={12}>
-            <Header gameState={gameState} />
-          </Grid>
-          <Grid item xs={12}>
-            <SignIn controlState={setGameState} />
-          </Grid>
-        </Grid>
-      </div>
-    );
+  const sendTaunt = () => {
+    if (socket) {
+      socket.emit('taunt', 'YA FUCKING WANKER');
+      console.log("Sent taunt");
+    }
+  }
 
-  else if (gameState === "lobby")
-    return (
-      <div className={"app"}>
-        <Grid container spacing={0}>
-          <Grid item xs={12}>
-            <Header gameState={gameState} />
-          </Grid>
-          <Grid item xs={12}>
-            other stuff now
+  return (
+    <div className={"app"}>
+      <Grid container spacing={0}>
+        <Grid item xs={12}>
+          <Header gameState={gameState} />
         </Grid>
+        <Grid item xs={12}>
+          {gameState === "waiting" ? (
+            <SignIn controlState={setGameState} setInitSocket={initSocket} />
+          ) : gameState === "lobby" ? (
+            [
+            "Waiting for start",
+            < Button onClick={sendTaunt} > Send taunt </Button>
+            ]
+          ) : (
+                "render failed"
+              )
+          }
         </Grid>
-      </div>
-    );
+      </Grid>
+    </div>
+  );
+
+
 
 };
 

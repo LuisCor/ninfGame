@@ -27,13 +27,13 @@ function Signin(props) {
         })
             .then((resp) => {
                 if (resp.ok) {
+                    props.setInitSocket(value);
+                    setValidity(true);
                     props.controlState("lobby");
-                }
-                if (!resp.ok) {
+                } else
                     setValidity(false);
-                }
             })
-            .catch(err => { setValidity(false); console.log("triggered") });
+            .catch(err => { setValidity(false); console.log(err) });
     }
 
     var textField;

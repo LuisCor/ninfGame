@@ -35,8 +35,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             if(gameState === 0){
                 if (players.some(e => e === username)) {
-                    reject("Already registered");
                     console.log("Signup > Already registered " + username);
+                    reject();
                 }
                 else {
                     console.log("Signup > Registering " + username);
