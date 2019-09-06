@@ -1,4 +1,6 @@
 const questions = require('../questions.json');
+const Player = require('../classes/player');
+
 const defaultTime = 15;
 const gameStates = [
     "waiting",
@@ -14,12 +16,6 @@ function gameRunner() {
     let timeLeft = defaultTime;
 
     thisgameSocket.sendQuestion(questions.question[0]);
-    /*function updateTime() {
-        thisgameSocket.sendTime(timeLeft - 1);
-        return Promise.delay(1000).then(() => updateTime());
-    }
-    updateTime();
-*/
 
     var updateTime = setInterval(function () {
         thisgameSocket.sendTime(timeLeft);
@@ -67,7 +63,7 @@ module.exports = {
                 }
                 else {
                     console.log("Signup > Registering " + username);
-                    players.push(username);
+                    players.push(new Player(username));
                     resolve();
                 }
             } else {
@@ -80,8 +76,8 @@ module.exports = {
     listPlayers: () => {
         return new Promise((resolve, reject) => {
             if (gameState === 0) {
-                console.log(players);
-                resolve(players);
+                console.log(players[0].getUsername());
+                resolve(players[0].getUsername());
             } else {
                 reject();
             }

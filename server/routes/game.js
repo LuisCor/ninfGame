@@ -28,14 +28,14 @@ router.post('/signup', (req, res, next) => {
         gameController
             .signUp(req.body.username)
             .then(() => res.sendStatus(200))
-            .catch(err => res.status(428).send(err));
+            .catch((err) => {console.log(err), res.status(428).send(err)});
 });
 
 router.get('/listPlayers', (req, res, next) => {
     gameController
         .listPlayers()
         .then((players) => res.status(200).send(players))
-        .catch(() => res.sendStatus(500));
+        .catch((err) => {console.log(err), res.sendStatus(500)});
 });
 
 

@@ -17,6 +17,12 @@ module.exports = {
                 console.log("> Socket " + username + " said: " + message);
                 io.sockets.emit('taunt', {username, message})
             });
+
+            socket.on('answer', (option) => {
+
+            });
+
+
         });
     },
     
@@ -37,4 +43,3 @@ module.exports = {
 
 
 }
-
