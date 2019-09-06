@@ -18,26 +18,23 @@ var socket = undefined;
 function App(props) {
 
   const [gameState, setGameState] = useState("waiting");
-  const [messages, setMessages] = useState(["Messages:"]);
+  const [messages, setMessages] = useState([]);
 
   const initSocket = (username) => {
     socket = gameSocket(username);
   };
 
   useEffect(() => {
+    console.table(messages);
     if (socket) {
-      receiveTaunt((newMessage) => {
-        let buffer = messages;
-        buffer.push(newMessage)
-        setMessages(Array.from(buffer))
-      });
-    }
-  });
 
-  useEffect(() => {
-    if (socket)
       isGameStarted(setGameState);
 
+      receiveTaunt((newMessage) => {
+        setMessages((messages) => ([...messages, newMessage]));
+      });
+
+    }
   });
 
   const clickTaunt = () => {
@@ -59,8 +56,8 @@ function App(props) {
             ) : gameState === "lobby" ? (
               <>
                 <p>Waiting for start</p>
-                {messages.map((value, index) => (<p key={index} >{value}</p>))}
                 <Button onClick={clickTaunt}> Send taunt </Button>
+            {messages.map((value, index) => (<p key={index} >{value}</p>))}
               </>
             ) : gameState === "running" ? (
               <>

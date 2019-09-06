@@ -36,10 +36,17 @@ module.exports = {
     },
 
     sendTime : (time) => {
-        io.sockets.emit('time', time);
-        console.log("Time: " + time);
-        console.log("\033c");
+        let timeString = "00:" + time.toString();
+        io.sockets.emit('time', timeString);
+        console.log("Time: " + timeString);
+    },
+
+    sendIntermissionTime : (time) => {
+        let timeString = "00:" + time.toString();
+        io.sockets.emit('time', timeString);
+        console.log("Time: " + timeString);
     }
+
 
 
 }

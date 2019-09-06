@@ -33,8 +33,9 @@ export const receiveQuestion = (setQuestion, setOptions) => {
 
 export const receiveTime = (setTime) => {
   socket.on('time', function (data) {
-    console.log("time: " + data.time);
-    setTime(data.time);
+    console.log(data);
+    console.log("time: " + data);
+    setTime(data);
   });
 };
 

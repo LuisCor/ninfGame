@@ -17,12 +17,25 @@ function gameRunner() {
 
     thisgameSocket.sendQuestion(questions.question[0]);
 
-    var updateTime = setInterval(function () {
+    var questionTimer = setInterval(function () {
         thisgameSocket.sendTime(timeLeft);
         timeLeft--;
-        if(timeLeft === 0)
-            clearInterval(setInterval);
+        if(timeLeft === -1)
+            clearInterval(questionTimer);
     }, 1000);
+
+    console.log("started intermission");
+    timeLeft = defaultTime;
+
+    var intermissionTimer = setInterval(function () {
+        thisgameSocket.sendIntermissionTime(timeLeft);
+        timeLeft--;
+        if(timeLeft === -1)
+            clearInterval(intermissionTimer);
+    }, 1000);
+
+    console.log("intermission ended");
+
 
 }
 

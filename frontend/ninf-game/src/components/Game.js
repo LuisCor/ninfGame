@@ -6,7 +6,8 @@ import gameSocket,
   receiveTaunt,
   isGameStarted,
   receiveQuestion,
-  sendTaunt
+  sendTaunt,
+  receiveTime
 } from './GameSocket';
 
 
@@ -20,8 +21,12 @@ function Game(props) {
   
 
     useEffect(() => {
-        if (socket)
-          receiveQuestion(setQuestion, setOptions);
+        if (socket){
+            receiveQuestion(setQuestion, setOptions);
+            receiveTime(setTime);
+
+        }
+          
     });
     
 
