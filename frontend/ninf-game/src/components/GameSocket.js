@@ -9,10 +9,18 @@ const configureSocket = (username) => {
   return socket;
 };
 
-export const triggeredEvent = () => {
-  console.log("got here");
-  socket.on('event', function (data) {
-    console.log("Event was triggered");
+export const isGameStarted = (gameStatus) => {
+  socket.on('gameStarted', function (data) {
+    console.log("> GAME STARTED");
+    gameStatus("running");
+  });
+};
+
+export const receiveTaunt = (messages, setMessages) => {
+  socket.on('taunt', function (data) {
+    console.log("> " + data.username + " : " + data.message);
+    messages.push(data.message);
+    setMessages(Array.from(messages));
   });
 };
 

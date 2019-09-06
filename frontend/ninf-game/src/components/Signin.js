@@ -13,8 +13,6 @@ function Signin(props) {
         setValue(event.target.value);
     }
 
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
