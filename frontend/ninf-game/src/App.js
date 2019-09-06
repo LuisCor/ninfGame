@@ -26,7 +26,11 @@ function App(props) {
 
   useEffect(() => {
     if (socket) {
-      receiveTaunt(messages, setMessages);
+      receiveTaunt((newMessage) => {
+        let buffer = messages;
+        buffer.push(newMessage)
+        setMessages(Array.from(buffer))
+      });
     }
   });
 
@@ -60,9 +64,8 @@ function App(props) {
               </>
             ) : gameState === "running" ? (
               <>
-                <Button onClick={clickTaunt}> Send taunt </Button>
+                <Game gameSocket={socket}/>
               </>
-              //<Game />
             ) : (
                   "render failed"
                 )

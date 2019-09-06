@@ -1,0 +1,24 @@
+{
+    "question": [
+        {
+            "question": "Are you dumb?",
+            "options": [
+                "yes",
+                "definetly",
+                "probably",
+                "no"
+            ],
+            "answer": 0
+        },
+        {
+            "question": "Are you dumb?",
+            "options": [
+                "windows",
+                "why not?",
+                "42",
+                "elon musk"
+            ],
+            "answer": 2
+        }
+    ]
+}

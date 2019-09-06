@@ -1,4 +1,5 @@
-
+const questions = require('../questions.json');
+const defaultTime = 15;
 const gameStates = [
     "waiting",
     "running",
@@ -8,9 +9,30 @@ var gameState = 0;
 var players = [];
 var thisgameSocket = undefined;
 
+function gameRunner() {
+
+    let timeLeft = defaultTime;
+
+    thisgameSocket.sendQuestion(questions.question[0]);
+    /*function updateTime() {
+        thisgameSocket.sendTime(timeLeft - 1);
+        return Promise.delay(1000).then(() => updateTime());
+    }
+    updateTime();
+*/
+
+    var updateTime = setInterval(function () {
+        thisgameSocket.sendTime(timeLeft);
+        timeLeft--;
+        if(timeLeft === 0)
+            clearInterval(setInterval);
+    }, 1000);
+
+}
+
 module.exports = {
 
-    setGameSocket : (gameSocket) => {
+    setGameSocket: (gameSocket) => {
         thisgameSocket = gameSocket;
     },
 
@@ -20,12 +42,13 @@ module.exports = {
         });
     },
 
-    startGame: () => {        
+    startGame: () => {
         return new Promise((resolve, reject) => {
-            if(gameState === 0){
+            if (gameState === 0) {
                 gameState = 1;
-                thisgameSocket.broadcastEvent();
+                thisgameSocket.startGame();
                 console.log("-> GAME STARTED");
+                gameRunner();
                 resolve();
             } else {
                 reject();
@@ -33,10 +56,11 @@ module.exports = {
         });
     },
 
+
     signUp: (username) => {
-        
+
         return new Promise((resolve, reject) => {
-            if(gameState === 0){
+            if (gameState === 0) {
                 if (players.some(e => e === username)) {
                     console.log("Signup > Already registered " + username);
                     reject();
@@ -55,7 +79,7 @@ module.exports = {
 
     listPlayers: () => {
         return new Promise((resolve, reject) => {
-            if(gameState === 0){
+            if (gameState === 0) {
                 console.log(players);
                 resolve(players);
             } else {

@@ -20,9 +20,21 @@ module.exports = {
         });
     },
     
-    broadcastEvent : () => {
+    startGame : () => {
         io.sockets.emit('gameStarted');
+    },
+
+    sendQuestion : (question) => {
+        console.log("> SENT QUESTION: " + question);
+        io.sockets.emit('question', question);
+    },
+
+    sendTime : (time) => {
+        io.sockets.emit('time', time);
+        console.log("Time: " + time);
+        console.log("\033c");
     }
+
 
 }
 

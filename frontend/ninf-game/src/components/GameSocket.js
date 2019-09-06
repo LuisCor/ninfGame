@@ -16,13 +16,29 @@ export const isGameStarted = (gameStatus) => {
   });
 };
 
-export const receiveTaunt = (messages, setMessages) => {
+export const receiveTaunt = (updateMessages) => {
   socket.on('taunt', function (data) {
     console.log("> " + data.username + " : " + data.message);
-    messages.push(data.message);
-    setMessages(Array.from(messages));
+    updateMessages(data.message);
   });
 };
+
+export const receiveQuestion = (setQuestion, setOptions) => {
+  socket.on('question', function (data) {
+    console.log("> QUESTION:" + data.question + " \n OPTIONS: " + data.options + "\n ANSWER: " + data.answer);
+    setQuestion(data.question);
+    setOptions(data.options);
+  });
+};
+
+export const receiveTime = (setTime) => {
+  socket.on('time', function (data) {
+    console.log("time: " + data.time);
+    setTime(data.time);
+  });
+};
+
+
 
 export const sendTaunt = () => {
   socket.emit('taunt', 'YA FUCKING WANKER');
