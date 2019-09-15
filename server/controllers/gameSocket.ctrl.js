@@ -11,6 +11,8 @@ module.exports = {
             var username = socket.handshake.query['username'];
             console.log(username + ' user connected');
 
+            io.emit('newPlayerConnected', username);
+
             socket.on('disconnect', function () {
                 console.log(username + ' disconnected');
             });

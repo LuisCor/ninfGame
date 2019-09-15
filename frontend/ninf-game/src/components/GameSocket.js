@@ -1,13 +1,24 @@
 import io from 'socket.io-client';
+import config from '../config.json';
+const server = config.serverLocation;
+
 
 var socket = undefined;
 
 const configureSocket = (username) => {
 
-  socket = io('http://localhost:5000', { query: "username=" + username });
+  socket = io(server, { query: "username=" + username });
 
   return socket;
 };
+
+export const detectNewPlayers = (getPlayers) => {
+  socket.on('newPlayerConnected', function (data) {
+    console.log("> player " + data +" detected");
+    getPlayers();
+  });
+};
+
 
 export const isGameStarted = (gameStatus) => {
   socket.on('gameStarted', function (data) {
@@ -23,9 +34,11 @@ export const receiveTaunt = (updateMessages) => {
   });
 };
 
-export const receiveQuestion = (setQuestionNumber, setQuestion, setOptions, setAnswer) => {
+export const receiveQuestion = (setQuestionNumber, setQuestion, setOptions, setAnswer, setTime) => {
   socket.on('question', function (data) {
-    console.log("> QUESTION " + data.questionNumber + " : " + data.question + " \n OPTIONS: " + data.options + "\n ANSWER: " + data.answer);
+    console.log("> QUESTION " + data.questionNumber + " : " + data.question + " \n OPTIONS: " + data.options);
+    setTime("Time");
+    setTime("Time");
     setQuestionNumber(data.questionNumber);
     setQuestion(data.question);
     setOptions(data.options);

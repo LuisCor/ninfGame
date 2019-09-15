@@ -5,6 +5,8 @@ import Button from '@material-ui/core/Button';
 import Header from './components/Header';
 import SignIn from './components/Signin';
 import Game from './components/Game';
+import Lobby from './components/Lobby';
+import Scoreboard from './components/Scoreboard';
 import gameSocket,
 {
   receiveTaunt,
@@ -27,6 +29,8 @@ function App(props) {
         isGameStarted(setGameState);
         isGameFinished(setGameState);
     }
+    console.log("app effect1");
+
   }, [gameState]);
 
 
@@ -39,8 +43,9 @@ function App(props) {
         setMessages((messages) => ([...messages, newMessage]));
       });
 
-      console.log("receivedTaunt");
     }
+    console.log("app effect2");
+
   }, [gameState]);
 
 
@@ -69,6 +74,7 @@ function App(props) {
             ) : gameState === "lobby" ? (
               <>
                 <p>Waiting for start</p>
+                <Lobby gameSocket={socket}/>
                 <Button onClick={clickTaunt}> Send taunt </Button>
                 {messages.map((value, index) => (<p key={index} >{value}</p>))}
               </>
@@ -77,7 +83,7 @@ function App(props) {
                 <Game gameSocket={socket} />
               </>
             ) : gameState === "finished" ? (
-              "Game has finished"
+              <Scoreboard/>
             ) : (
               "render failed"
             )

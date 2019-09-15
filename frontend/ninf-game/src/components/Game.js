@@ -21,19 +21,20 @@ function Game(props) {
     const [question, setQuestion] = useState("Question");
     const [options, setOptions] = useState(["Option 1", "Option2"]);
     const [answer, setAnswer] = useState("Answer");
+    const [time, setTime] = useState("Time");
+
 
     useEffect(() => {
         if (socket) {
-            receiveQuestion(setQuestionNumber, setQuestion, setOptions, setAnswer);
+            receiveQuestion(setQuestionNumber, setQuestion, setOptions, setAnswer, setTime);
         }
-    }, [question]);
+    }, [questionNumber]);
 
 
-    const [time, setTime] = useState("Time");
     useEffect(() => {
         if (socket)
             receiveTime(setTime);
-    }, [question]);
+    }, [questionNumber]);
 
 
     const clickAnswer = ((questionIndex, optionIndex) => {
