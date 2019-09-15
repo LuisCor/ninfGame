@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import config from '../config.json';
+const server = config.serverLocation;
+
 
 function Signin(props) {
 
@@ -16,7 +19,7 @@ function Signin(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch('http://localhost:5000/signup', {
+        fetch(server + '/signup', {
             method: 'POST',
             body: JSON.stringify({ username: value }),
             headers: {
