@@ -1,5 +1,7 @@
 var io;
 
+var receiveAnswer;
+
 module.exports = {
     configureSocket : (http) => {
 
@@ -18,10 +20,9 @@ module.exports = {
                 io.sockets.emit('taunt', {username, message})
             });
 
-            socket.on('answer', (option) => {
-
+            socket.on('answer', (answer) => {
+                receiveAnswer(username, answer);
             });
-
 
         });
     },
@@ -43,10 +44,11 @@ module.exports = {
 
     sendIntermissionTime : (time) => {
         let timeString = "00:" + time.toString();
-        io.sockets.emit('time', timeString);
-        console.log("Time: " + timeString);
+        io.sockets.emit('intermission', timeString);
+        console.log("Intermission: " + timeString);
+    },
+
+    receiveAnswer : (logic) => {
+        receiveAnswer = logic;
     }
-
-
-
 }

@@ -10,16 +10,6 @@ router.get('/gameState', (req, res, next) => {
         .catch(err => res.sendStatus(500));
 });
 
-router.get('/startGame', (req, res, next) => {
-
-    gameController
-        .startGame()
-        .then(() => {
-            res.sendStatus(200);
-        })
-        .catch((err) => {console.log(err), res.sendStatus(428)});
-});
-
 router.post('/signup', (req, res, next) => {
 
     if (req.body === undefined || req.body.username === undefined)
@@ -36,6 +26,26 @@ router.get('/listPlayers', (req, res, next) => {
         .listPlayers()
         .then((players) => res.status(200).send(players))
         .catch((err) => {console.log(err), res.sendStatus(500)});
+});
+
+router.get('/startGame', (req, res, next) => {
+
+    gameController
+        .startGame()
+        .then(() => {
+            res.sendStatus(200);
+        })
+        .catch((err) => {console.log(err), res.sendStatus(428)});
+});
+
+router.get('/nextQuestion', (req, res, next) => {
+
+    gameController
+        .nextQuestion()
+        .then(() => {
+            res.sendStatus(200);
+        })
+        .catch((err) => {console.log(err), res.sendStatus(428)});
 });
 
 

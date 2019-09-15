@@ -1,7 +1,10 @@
+const questions = require('../questions.json');
+const nrQuestions = questions.question.length;
 
 var username;
-var answers;
+var answers = new Array(nrQuestions);
 var score;
+
 
 module.exports = function Player(username) {
 

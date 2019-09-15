@@ -14,32 +14,43 @@ import gameSocket,
 
 
 var socket = undefined;
+var messagesnum = 0;
+
 
 function App(props) {
 
   const [gameState, setGameState] = useState("waiting");
-  const [messages, setMessages] = useState([]);
-
-  const initSocket = (username) => {
-    socket = gameSocket(username);
-  };
 
   useEffect(() => {
-    console.table(messages);
     if (socket) {
-
       isGameStarted(setGameState);
+    }
+  });
+
+
+  const [messages, setMessages] = useState(["Messages"]);
+
+  useEffect(() => {
+    if (socket) {
 
       receiveTaunt((newMessage) => {
         setMessages((messages) => ([...messages, newMessage]));
       });
 
+      console.log("receivedTaunt");
     }
-  });
+  }, [gameState]);
+
+
+  const initSocket = (username) => {
+    socket = gameSocket(username);
+  };
+
 
   const clickTaunt = () => {
     if (socket) {
-      sendTaunt();
+      sendTaunt(messagesnum);
+      messagesnum++;
     }
   }
 
@@ -57,11 +68,11 @@ function App(props) {
               <>
                 <p>Waiting for start</p>
                 <Button onClick={clickTaunt}> Send taunt </Button>
-            {messages.map((value, index) => (<p key={index} >{value}</p>))}
+                {messages.map((value, index) => (<p key={index} >{value}</p>))}
               </>
             ) : gameState === "running" ? (
               <>
-                <Game gameSocket={socket}/>
+                <Game gameSocket={socket} />
               </>
             ) : (
                   "render failed"

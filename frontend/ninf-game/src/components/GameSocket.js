@@ -23,11 +23,13 @@ export const receiveTaunt = (updateMessages) => {
   });
 };
 
-export const receiveQuestion = (setQuestion, setOptions) => {
+export const receiveQuestion = (setQuestion, setOptions, setAnswer) => {
   socket.on('question', function (data) {
     console.log("> QUESTION:" + data.question + " \n OPTIONS: " + data.options + "\n ANSWER: " + data.answer);
+    //TODO: change server to send question index, and change following instructions
     setQuestion(data.question);
     setOptions(data.options);
+    setAnswer(data.answer);
   });
 };
 
@@ -39,19 +41,15 @@ export const receiveTime = (setTime) => {
   });
 };
 
-
-
-export const sendTaunt = () => {
-  socket.emit('taunt', 'YA FUCKING WANKER');
+export const sendTaunt = (message) => {
+  socket.emit('taunt', 'message nr ' + message);
   console.log("Sent taunt");
 };
 
-
-//EXPORT EXAMPLES
-//export const getCurrentPot = () => socket.emit('GET_CURRENT_POT');
-
-//export const sendNameToServer = name =>
-//  socket.emit('SEND_NAME_TO_SERVER', name);
+export const sendAnswer = (answer) => {
+  socket.emit('answer', answer);
+  console.log("Sent answer > " + answer);
+};
 
 
 export default configureSocket;
