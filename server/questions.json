@@ -1,35 +1,44 @@
 {
     "question": [
         {
-            "question": "Are you dumb?",
+            "question": "De quem é a famosa frase “Penso, logo existo”?",
             "options": [
-                "yes",
-                "definetly",
-                "probably",
-                "no"
+                "Platão",
+                "Galileu Galilei",
+                "Descartes",
+                "Sócrates"
+            ],
+            "answer": 2
+        },
+        {
+            "question": "Qual é o menor e o maior país do mundo?",
+            "options": [
+                "Vaticano e Rússia",
+                "Nauru e China",
+                "Mónaco e Canadá",
+                "Malta e Estados Unidos"
             ],
             "answer": 0
         },
         {
-            "question": "What's the meaning of life?",
+            "question": "Quantos elementos químicos tem a tabela periódica?",
             "options": [
-                "windows",
-                "why not?",
-                "42",
-                "elon musk"
+                "100",
+                "118",
+                "110",
+                "115"
             ],
-            "answer": 2
+            "answer": 1
         },
         {
-            "question": "Is there a planet 9?",
+            "question": "Quem pintou Guernica?",
             "options": [
-                "Yes",
-                "No",
-                "Of course",
-                "Debatable"
+                "Paul Cézanne",
+                "Pablo Picasso",
+                "Diego Rivera",
+                "Tarsila do Amaral"
             ],
-            "answer": 2
+            "answer": 1
         }
-
     ]
 }
