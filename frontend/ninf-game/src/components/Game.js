@@ -17,22 +17,23 @@ function Game(props) {
 
     var socket = props.gameSocket;
 
+    const [questionNumber, setQuestionNumber] = useState(0);
     const [question, setQuestion] = useState("Question");
     const [options, setOptions] = useState(["Option 1", "Option2"]);
     const [answer, setAnswer] = useState("Answer");
+
     useEffect(() => {
         if (socket) {
-            receiveQuestion(setQuestion, setOptions, setAnswer);
+            receiveQuestion(setQuestionNumber, setQuestion, setOptions, setAnswer);
         }
     }, [question]);
 
 
     const [time, setTime] = useState("Time");
     useEffect(() => {
-        if (socket) {
+        if (socket)
             receiveTime(setTime);
-        }
-    }, [question, time]);
+    }, [question]);
 
 
     const clickAnswer = ((questionIndex, optionIndex) => {
@@ -53,6 +54,7 @@ function Game(props) {
                 alignItems="center"
                 justify="center"
             >
+                {questionNumber}
                 {question}
                 {time === "00:0" ? (
                     <>
@@ -69,7 +71,7 @@ function Game(props) {
                             {options.map((value, index) => (
                                 <Button
                                     key={index}
-                                    onClick={() => (clickAnswer(0, index))}
+                                    onClick={() => (clickAnswer(questionNumber, index))}
                                 >
                                     {value}
                                 </Button>))}

@@ -23,10 +23,10 @@ export const receiveTaunt = (updateMessages) => {
   });
 };
 
-export const receiveQuestion = (setQuestion, setOptions, setAnswer) => {
+export const receiveQuestion = (setQuestionNumber, setQuestion, setOptions, setAnswer) => {
   socket.on('question', function (data) {
-    console.log("> QUESTION:" + data.question + " \n OPTIONS: " + data.options + "\n ANSWER: " + data.answer);
-    //TODO: change server to send question index, and change following instructions
+    console.log("> QUESTION " + data.questionNumber + " : " + data.question + " \n OPTIONS: " + data.options + "\n ANSWER: " + data.answer);
+    setQuestionNumber(data.questionNumber);
     setQuestion(data.question);
     setOptions(data.options);
     setAnswer(data.answer);
@@ -35,11 +35,18 @@ export const receiveQuestion = (setQuestion, setOptions, setAnswer) => {
 
 export const receiveTime = (setTime) => {
   socket.on('time', function (data) {
-    console.log(data);
-    console.log("time: " + data);
+    console.log("Time: " + data);
     setTime(data);
   });
 };
+
+export const isGameFinished = (gameStatus) => {
+  socket.on('gameFinished', function (data) {
+    console.log("> GAME FINISHED");
+    gameStatus("finished");
+  });
+};
+
 
 export const sendTaunt = (message) => {
   socket.emit('taunt', 'message nr ' + message);

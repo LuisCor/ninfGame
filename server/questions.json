@@ -11,7 +11,7 @@
             "answer": 0
         },
         {
-            "question": "Are you dumb?",
+            "question": "What's the meaning of life?",
             "options": [
                 "windows",
                 "why not?",
@@ -19,6 +19,17 @@
                 "elon musk"
             ],
             "answer": 2
+        },
+        {
+            "question": "Is there a planet 9?",
+            "options": [
+                "Yes",
+                "No",
+                "Of course",
+                "Debatable"
+            ],
+            "answer": 2
         }
+
     ]
 }

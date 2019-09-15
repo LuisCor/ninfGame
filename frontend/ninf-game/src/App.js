@@ -9,7 +9,8 @@ import gameSocket,
 {
   receiveTaunt,
   isGameStarted,
-  sendTaunt
+  sendTaunt,
+  isGameFinished
 } from './components/GameSocket';
 
 
@@ -23,9 +24,10 @@ function App(props) {
 
   useEffect(() => {
     if (socket) {
-      isGameStarted(setGameState);
+        isGameStarted(setGameState);
+        isGameFinished(setGameState);
     }
-  });
+  }, [gameState]);
 
 
   const [messages, setMessages] = useState(["Messages"]);
@@ -74,9 +76,11 @@ function App(props) {
               <>
                 <Game gameSocket={socket} />
               </>
+            ) : gameState === "finished" ? (
+              "Game has finished"
             ) : (
-                  "render failed"
-                )
+              "render failed"
+            )
           }
         </Grid>
       </Grid>

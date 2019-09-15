@@ -32,7 +32,7 @@ module.exports = {
     },
 
     sendQuestion : (question) => {
-        console.log("> SENT QUESTION: " + question);
+        console.log("> SENT QUESTION: " + JSON.stringify(question));
         io.sockets.emit('question', question);
     },
 
@@ -42,13 +42,12 @@ module.exports = {
         console.log("Time: " + timeString);
     },
 
-    sendIntermissionTime : (time) => {
-        let timeString = "00:" + time.toString();
-        io.sockets.emit('intermission', timeString);
-        console.log("Intermission: " + timeString);
-    },
-
     receiveAnswer : (logic) => {
         receiveAnswer = logic;
-    }
+    },
+
+    endGame : () => {
+        io.sockets.emit('gameFinished');
+    },
+
 }

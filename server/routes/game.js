@@ -48,6 +48,15 @@ router.get('/nextQuestion', (req, res, next) => {
         .catch((err) => {console.log(err), res.sendStatus(428)});
 });
 
+router.get('/getScores', (req, res, next) => {
+
+    gameController
+        .getScores()
+        .then((players) => res.status(200).send(players))
+        .catch((err) => {console.log(err), res.sendStatus(500)});
+});
+
+
 
 module.exports.router = router;
 module.exports.gameController = gameController;
