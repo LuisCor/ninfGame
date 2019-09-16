@@ -55,10 +55,9 @@ function Game(props) {
                 alignItems="center"
                 justify="center"
             >
-                {questionNumber}
-                {question}
+                <h2>{questionNumber+1} - {question}</h2>
                 {time === "00:0" ? (
-                    <>
+                    <> 
                         {options.map((value, index) => (
                             index === answer ? (
                                 <Button key={index} variant="contained" color="primary">{value}</Button>
@@ -72,6 +71,7 @@ function Game(props) {
                             {options.map((value, index) => (
                                 <Button
                                     key={index}
+                                    variant="outlined"
                                     onClick={() => (clickAnswer(questionNumber, index))}
                                 >
                                     {value}
@@ -79,7 +79,7 @@ function Game(props) {
                         </>
                     )
                 }
-                {time}
+                <b>{time}</b>
             </Grid>
         </div>
     )

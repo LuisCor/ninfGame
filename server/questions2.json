@@ -1,0 +1,24 @@
+{
+    "question": [
+        {
+            "question": "Qual o nome da mascote do ninf?",
+            "options": [
+                "Bit",
+                "Subtil",
+                "Byte",
+                "PC"
+            ],
+            "answer": 0
+        },
+        {
+            "question": "Em que sala está o nInf?",
+            "options": [
+                "Ed.2 128",
+                "Ed.2 117",
+                "Ed.7 1C",
+                "Grande Auditorio"
+            ],
+            "answer": 1
+        }
+    ]
+}
